@@ -1,269 +1,220 @@
-# Alpha Dust Hexo Blog Theme
+# Alpha Dust Modern — Hexo Blog Theme
 
 ![](http://www.codeblocq.com/img/hexo-theme-thumbnail/AlphaDust.jpg)
 
-[Check out the demo](http://www.codeblocq.com/assets/projects/hexo-theme-alpha-dust/).
+[Original Demo](http://www.codeblocq.com/assets/projects/hexo-theme-alpha-dust/)
 
-This theme was developed from scratch by myself just for fun. It is a glowy futuristic theme, hope you will find a use for it :)
+**Alpha Dust Modern** is a glowy, futuristic, cyber-aesthetic blog theme for [Hexo](https://hexo.io/).
+
+This is a modernized edition that removes legacy runtime dependencies (such as jQuery, GSAP, and Featherlight), enhances security with dynamic Content-Security-Policy (CSP) and Web Crypto post encryption, embeds an interactive canvas-based PDF reader, and significantly boosts loading performance and Core Web Vitals.
+
+---
+
+## What's Modernized in This Edition
+
+- **Zero-Dependency Vanilla JS**: Replaced legacy jQuery and GSAP animations with lightweight native ES JavaScript.
+- **Native `<dialog>` Lightbox**: Replaced Featherlight.js with standard HTML5 `<dialog>` for fast, accessible image galleries.
+- **Post Password Encryption**: Build-time AES-256-GCM + PBKDF2-HMAC-SHA256 (210,000 iterations) encryption with native client-side Web Crypto decryption. No bulky CryptoJS library required.
+- **Embedded PDF.js Viewer**: Built-in canvas PDF reader (`{% pdf %}` tag) with lazy-loading and encrypted attachment decryption support.
+- **Dynamic Content-Security-Policy (CSP)**: High-security CSP header that dynamically adapts to allow approved third-party services (Disqus, Google Analytics, Facebook comments, CDNs).
+- **Non-blocking Font Loading**: Google Fonts and Font Awesome load asynchronously without blocking page render.
+- **Native Image Lazy Loading**: Automatic `loading="lazy" decoding="async"` on post images for superior LCP.
+- **Modern Hexo Compatibility**: Compatible with Hexo 5, 6, 7, and 8+; includes standard `package.json`.
+- **Flexible Logo & Favicons**: Supports both Font Awesome icons and image logos with automatic fallback, plus favicon / apple-touch-icon configuration.
+- **Updated Social Accounts**: Added Telegram support and removed deprecated Google Plus.
+
+---
 
 ## Features Overview
 
-- Responsive
-- Disqus comments
-- Google Analytics
-- Tags Support
-- Responsive Images
-- Responsive YouTube and Vimeo videos
-- Image Gallery
-- Social Accounts configuration
-- Pagination
-- Pages
-- Only one category per post
-- Stylus CSS preprocessor
-- ejs HTML templates
+- Responsive and mobile-first design
+- Futuristic neon/glow visual styling
+- Category password protection & teaser preview
+- Built-in PDF reader with responsive fullscreen and zoom controls
+- Image gallery with native modal lightbox
+- Disqus & Facebook comments integration
+- Google Analytics support
+- Tags and categories listing pages
+- Stylus CSS preprocessor & EJS HTML templates
+- RSS and Sitemap integration support
 
-## External libraries used
-
-- [Bootstrap 4 Alpha](http://v4-alpha.getbootstrap.com/) 
-- [FeatherLight.js](http://noelboss.github.io/featherlight/) (Gallery)
-- [jQuery](https://jquery.com/)
-- [GSAP](http://greensock.com/gsap)
-- [Font Awesome](http://fontawesome.io/icons/)
+---
 
 ## Installation
 
-### Install the theme
+### 1. Clone the Theme
 
-Install the theme by using:
+In your Hexo blog root directory:
 
+```bash
+git clone https://github.com/Z1rconium/hexo-theme-alpha-dust-modern themes/alpha-dust
 ```
-$ git clone https://github.com/klugjo/hexo-theme-alpha-dust themes/alpha-dust
-```
 
-Then update your blog's main `_config.yml` to set the theme to `alpha-dust`:
+### 2. Enable the Theme
 
-i.e:
+In your blog's root `_config.yml`, set the `theme` field to `alpha-dust`:
 
-```
-# Extensions
-## Plugins: http://hexo.io/plugins/
-## Themes: http://hexo.io/themes/
+```yaml
 theme: alpha-dust
 ```
 
+---
+
 ## Theme Configuration
 
-The theme's global configuration is done in `/themes/hexo-theme-alpha-dust/_config.yml`.
+All theme configurations can be modified in `themes/alpha-dust/_config.yml` (or in your blog's main `_config.yml` under `theme_config:`).
 
-### Menu
+### Menu Navigation
 
-The menu is configured in the theme's `_config.yml`.
+Configure top navigation links:
 
-```
-# Header
+```yaml
 menu:
   Home: /
   Archives: /archives
-  About: /about.html
+  About: /about/
+  Tags: /tags/
+  Categories: /categories/
+  Contact: /contact/
 ```
 
-The object key is the label and the value is the path.
+### Blog Logo
 
-### Blog's Logo
-
-The blog's logo (above the title) is configured in the theme's `_config.yml`.
-
-Use a [Font Awesome class](http://fontawesome.io/icons/):
+You can display either a [Font Awesome icon](https://fontawesome.com/v4/icons/) or a custom image:
 
 ```yaml
-# Logo (Font Awesome Class)
+# Font Awesome icon class (used as fallback)
 fa_logo: fa-cube
-```
 
-Or specify an image path (leave empty to fall back to `fa_logo`):
-
-```yaml
-# Logo image (optional)
+# Custom logo image path (optional; leave empty to use fa_logo)
 logo_img: /img/logo.png
 ```
 
-### Favicon
+You can also override the logo icon for a specific post or page via front-matter:
 
-Configure your favicon in `_config.yml`:
+```markdown
+---
+title: My Futuristic Post
+logoIcon: fa-rocket
+---
+```
+
+### Favicons
+
+Configure your favicon and Apple touch icon paths:
 
 ```yaml
 favicon: /favicon.ico
 apple_touch_icon: /apple-touch-icon.png
 ```
 
-Page's and post's logo is configured in front matter and overrides blog's logo if defined.
+### Footer
 
-```
----
-title: Post's title
-logoIcon: fa-pencil-square
----
-```
+Customize the "About" section and copyright line (HTML allowed):
 
-### Footer About Section Text
-
-The About section's text in the footer is configured in the theme's `_config.yml`. HTML allowed.
-
-```
-# Footer About Text
-footer_about: "Make Websites. Make Magic."
+```yaml
+footer_about: "A personal blog built with Hexo."
+footer_copyright: "&copy; 2026 Your Name. All rights reserved."
 ```
 
-### Footer Copyright Section Text
+### Social Links
 
-The Copyright section's text in the footer is configured in the theme's `_config.yml`. HTML allowed.
+Add links to your social profiles in the footer. If left blank, the corresponding icon will not be displayed:
 
-```
-#Footer Copyright Line
-footer_copyright: "@Untitled. All right reserved | Design & Hexo <a href=\"http://www.codeblocq.com/\">Jonathan Klughertz</a>"
-```
-
-### Default post title
-
-The default post title (used when no title is specified) is configured in the theme's `_config.yml`.
-
-```
-# Default post title
-default_post_title: Untitled
-```
-
-### Archive Date Format
-
-You can change the date format for the archive page if you so desire
-
-```
-# Archive Date Format
-archive_date_format: MMM YYYY
+```yaml
+twitter_url:
+facebook_url:
+instagram_url:
+dribble_url:
+github_url: https://github.com/yourusername
+telegram_url: https://t.me/yourusername
+behance_url:
+fivehundredpx_url:
+email_url: yourname@example.com
+rss_url: /atom.xml
 ```
 
-### Disqus Comments
+### Comments & Analytics
 
-The disqus shortname is specified in the theme's `_config.yml`.
-
-```
-# Comments.
+```yaml
+# Disqus
 comments:
-  # Disqus comments
-  disqus_shortname: klugjotest
+  disqus_shortname: your_disqus_shortname
+
+# Google Analytics
+google_analytics: UA-XXXXXXXX-X
 ```
 
-### Google Analytics
+*(The theme's Content-Security-Policy automatically expands whitelist rules for Disqus and Google Analytics when configured.)*
 
-The Google Analytics Tracking ID is configured in the theme's `_config.yml`.
+---
 
-```
-# Google Analytics Tracking ID
-google_analytics:
-```
+## Advanced Features
 
-### Social Account
+### 1. Category Password Protection
 
-Setup the links to your social pages in the theme's `_config.yml`. Links are in the footer. No link = No icon.
-
-```
-# Social Accounts
-twitter_url: https://twitter.com/?lang=en
-facebook_url: https://www.facebook.com/
-instagram_url: https://www.instagram.com/
-dribble_url: https://dribbble.com/
-github_url: https://github.com/klugjo/hexo-theme-alpha-dust
-googleplus_url: https://plus.google.com/
-behance_url: https://www.behance.net/
-fivehundredpx_url: https://500px.com/
-email_url: \#
-rss_url: \#
-```
-
-## Tags page.
-
-> Follow these steps to add a `tags` page that contains all the tags in your site.
-
-- Create a page named `tags`
-
-```
-$ hexo new page "tags"
-```
-
-- Edit the newly created page and set page type to `tags` in the front matter.
-
-```
-title: All tags
-type: "tags"
-```
-
-- Add `tags` to the menu in the theme `_config.yml`:
-
-```
-# Header
-menu:
-  Home: /
-  Archives: /archives
-  About: /about.html
-  Tags: /tags
-```
-
-## Categories page.
-
-> Follow these steps to add a `categories` page that contains all the categories in your site.
-
-- Create a page named `categories`
-
-```
-$ hexo new page "categories"
-```
-
-- Edit the newly created page and set page type to `categories` in the front matter.
-
-```
-title: All tags
-type: "categories"
-```
-
-- Add `tags` to the menu in the theme `_config.yml`:
-
-```
-# Header
-menu:
-  Home: /
-  Archives: /archives
-  About: /about.html
-  Categories: /categories
-```
-
-## Category Password Protection
- 
-You can password-protect entire categories of posts at build time using AES-256-GCM + PBKDF2:
+You can protect all posts in designated categories with a password at build time. The post content and excerpt are encrypted with AES-256-GCM:
 
 ```yaml
 category_password:
-  SecretCategory: "your-password"
+  Private: "your-password-here"
 ```
 
-Posts belonging to `SecretCategory` will be encrypted when Hexo builds and can be unlocked client-side by entering the category password.
+> **Tip**: You can also provide passwords via the environment variable `CATEGORY_PASSWORDS` at build time to keep passwords out of committed files:
+> ```bash
+> CATEGORY_PASSWORDS='{"Private":"your-password-here"}' hexo generate
+> ```
 
-## Embedded PDF Viewer
+Visitors can unlock the post directly in their browser. Once unlocked, the password is remembered in the current session so other posts and homepage teasers in that category unlock automatically.
 
-Alpha Dust comes with a built-in canvas-based PDF reader powered by PDF.js:
+### 2. Embedded PDF Reader
+
+Embed interactive PDF documents directly inside posts with the `{% pdf %}` tag:
 
 ```markdown
-{% pdf /files/document.pdf "Document Title" %}
+{% pdf /files/sample.pdf "Document Title" %}
 ```
 
-If the post belongs to a password-protected category, the PDF is also encrypted and unlocked seamlessly with the post.
+- Features page navigation, zoom controls, and fullscreen view.
+- Supports lazy loading: PDF.js is only loaded on pages containing PDF viewers.
+- When placed in a password-protected category, the PDF attachment is also encrypted on build and unlocked with the post password.
 
-## Creator
+---
 
-This theme was created by Jonathan Klughertz, check out my [github](https://github.com/klugjo) and [blog](http://www.codeblocq.com/) for more info.
+## Creating Tags and Categories Pages
 
-## Bugs
+### Tags Page
 
-If you have a question, feature request or a bug you need me to fix, please [click here](https://github.com/klugjo/hexo-theme-phantom/issues/new) to file an issue.
+1. Create a new page:
+   ```bash
+   hexo new page "tags"
+   ```
+2. Edit `source/tags/index.md`:
+   ```markdown
+   ---
+   title: "Tags"
+   type: "tags"
+   ---
+   ```
 
-## License
+### Categories Page
 
-MIT
+1. Create a new page:
+   ```bash
+   hexo new page "categories"
+   ```
+2. Edit `source/categories/index.md`:
+   ```markdown
+   ---
+   title: "Categories"
+   type: "categories"
+   ---
+   ```
+
+---
+
+## Credits & License
+
+- Original Alpha Dust theme created by [Jonathan Klughertz](https://github.com/klugjo).
+- Modernized and maintained by [Z1rconium](https://github.com/Z1rconium).
+- Licensed under the [MIT License](LICENSE).
