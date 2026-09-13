@@ -1,11 +1,18 @@
 .menu-bg
   background: #000
-  display none
   opacity: 0
+  visibility: hidden
+  pointer-events: none
   width: 100vw
   height: 100vh
   position: fixed
   z-index: 100
+  transition: opacity 0.5s ease, visibility 0s linear 0.5s
+  &.is-open
+    opacity: 0.92
+    visibility: visible
+    pointer-events: auto
+    transition: opacity 0.5s ease, visibility 0s linear 0s
   .menu-container
     position: fixed
     padding 0 250px
@@ -14,6 +21,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    transition: padding 1s ease
     ul
       list-style-type none
       margin-bottom 0
@@ -25,6 +33,16 @@
           text-transform uppercase
           font-size 30px
           border-bottom none
+  &.is-open .menu-container
+    padding 0 40px
+  .menu-item
+    opacity 0
+    transition: opacity 0.3s ease
+  &.is-open .menu-item
+    opacity 1
+    for i in (1..8)
+      &:nth-child({i})
+        transition-delay: (i * 0.08s)
 
 nav
   position fixed

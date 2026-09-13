@@ -1,12 +1,5 @@
 # Alpha Dust Hexo Blog Theme
 
-forked 200821
-#### removed google plus link
-#### add telegram link
-(updated font-awesome 4.7.0)
-config.yml modified
----
-
 ![](http://www.codeblocq.com/img/hexo-theme-thumbnail/AlphaDust.jpg)
 
 [Check out the demo](http://www.codeblocq.com/assets/projects/hexo-theme-alpha-dust/).
@@ -76,15 +69,31 @@ menu:
 
 The object key is the label and the value is the path.
 
-### Blog's Logo Image Source
+### Blog's Logo
 
 The blog's logo (above the title) is configured in the theme's `_config.yml`.
 
-The value should be a valid [Font Awesome class](http://fontawesome.io/icons/)
+Use a [Font Awesome class](http://fontawesome.io/icons/):
 
-```
+```yaml
 # Logo (Font Awesome Class)
 fa_logo: fa-cube
+```
+
+Or specify an image path (leave empty to fall back to `fa_logo`):
+
+```yaml
+# Logo image (optional)
+logo_img: /img/logo.png
+```
+
+### Favicon
+
+Configure your favicon in `_config.yml`:
+
+```yaml
+favicon: /favicon.ico
+apple_touch_icon: /apple-touch-icon.png
 ```
 
 Page's and post's logo is configured in front matter and overrides blog's logo if defined.
@@ -225,6 +234,27 @@ menu:
   About: /about.html
   Categories: /categories
 ```
+
+## Category Password Protection
+ 
+You can password-protect entire categories of posts at build time using AES-256-GCM + PBKDF2:
+
+```yaml
+category_password:
+  SecretCategory: "your-password"
+```
+
+Posts belonging to `SecretCategory` will be encrypted when Hexo builds and can be unlocked client-side by entering the category password.
+
+## Embedded PDF Viewer
+
+Alpha Dust comes with a built-in canvas-based PDF reader powered by PDF.js:
+
+```markdown
+{% pdf /files/document.pdf "Document Title" %}
+```
+
+If the post belongs to a password-protected category, the PDF is also encrypted and unlocked seamlessly with the post.
 
 ## Creator
 

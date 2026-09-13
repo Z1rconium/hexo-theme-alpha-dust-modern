@@ -1,0 +1,162 @@
+.pdf-viewer
+  position relative
+  margin 0 0 3em 0
+  border 1px solid $mainColor1
+  background $bgColor
+
+  .pdf-toolbar
+    display flex
+    align-items center
+    flex-wrap wrap
+    gap 8px
+    padding 8px 12px
+    background $headerBgColor
+    font-family $fontTitle
+    color $greyTextColor
+    .btn
+      padding 4px 10px
+      line-height 1
+      font-size 0.9em
+      border-bottom none
+      // Anchor buttons (e.g. .pdf-download) otherwise inherit the sitewide
+      // a:link color, which has higher specificity than the plain .btn rule
+      // and matches the button background almost exactly — invisible icon.
+      color $headerBgColor
+    .pdf-page-info
+      margin 0 8px
+      white-space nowrap
+    select.pdf-zoom-mode
+      padding 4px 10px
+      line-height 1
+      font-size 0.9em
+      border none
+      cursor pointer
+
+  .btn[disabled]
+    opacity 0.4
+    pointer-events none
+
+  .pdf-canvas-wrap
+    overflow auto
+    text-align center
+    padding 20px
+    max-height 80vh
+    min-height 400px
+
+  .pdf-page-container
+    position relative
+    margin 0 auto 20px
+    &:last-child
+      margin-bottom 0
+    canvas.pdf-page
+      display block
+      width 100%
+      height 100%
+      max-width 100%
+      box-shadow 0 0 15px rgba(0, 0, 0, 0.6)
+
+    &.is-page-error
+      display flex
+      align-items center
+      justify-content center
+      min-height 120px
+      border 1px dashed $mainColor1
+      color $greyTextColor
+      font-family $fontTitle
+      canvas.pdf-page
+        display none
+      &::before
+        content "Page unavailable"
+
+  &.is-loading .pdf-canvas-wrap::before
+    content "Loading preview…"
+    color $greyTextColor
+    font-family $fontTitle
+
+  &.is-error .pdf-canvas-wrap::before
+    content "Preview unavailable — use the download button above."
+    color $greyTextColor
+    font-family $fontTitle
+    max-width 80%
+
+  &.is-loading .pdf-toolbar .btn,
+  &.is-error .pdf-toolbar .btn
+    opacity 0.4
+    pointer-events none
+
+  @media $xs
+    .pdf-canvas-wrap
+      min-height 240px
+    .pdf-toolbar
+      justify-content center
+      select.pdf-zoom-mode
+        font-size 0.85em
+      .pdf-page-info
+        order -1
+        width 100%
+        text-align center
+        margin-bottom 6px
+
+  &.is-compact
+    border none
+    background none
+
+    .pdf-compact-card
+      display flex
+      align-items center
+      gap 10px
+      padding 10px 14px
+      border 1px solid $mainColor1
+      color $mainColor1
+      text-decoration none
+      font-family $fontTitle
+      transition text-shadow 0.3s ease
+      &:hover
+        text-shadow $titleTextShadowLight
+
+      i.fa-file-pdf-o
+        font-size 1.3em
+        flex none
+
+      .pdf-compact-label
+        flex 1 1 auto
+        min-width 0
+        overflow hidden
+        text-overflow ellipsis
+        white-space nowrap
+
+      .pdf-compact-hint
+        flex none
+        font-size 0.85em
+        color $greyTextColor
+        white-space nowrap
+
+    @media $xs
+      .pdf-compact-card .pdf-compact-hint
+        display none
+
+.pdf-lightbox
+  border none
+  background transparent
+  padding 0
+  width 95vw
+  height 95vh
+  max-width none
+  max-height none
+  &::backdrop
+    background rgba(0, 0, 0, 0.9)
+  .pdf-canvas-wrap
+    max-height calc(95vh - 40px)
+  .pdf-lightbox-close
+    position fixed
+    top 20px
+    right 30px
+    color $mainColor1
+    font-size 2.5em
+    line-height 1
+    cursor pointer
+    background transparent
+    border none
+    transition text-shadow 0.3s ease
+    &:hover
+      text-shadow $titleTextShadowLight

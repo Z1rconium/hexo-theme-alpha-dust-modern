@@ -1,6 +1,12 @@
 <header>
     <div class="logo">
-        <a href="<%- config.root %>"><i class="logo-icon fa <%- logoIcon ? logoIcon : theme.fa_logo %>" aria-hidden="true"></i></a>
+        <a href="<%- config.root %>">
+            <% if (!logoIcon && theme.logo_img) { %>
+                <img class="logo-img" src="<%- url_for(theme.logo_img) %>" alt="<%= config.title %>" width="256" height="256">
+            <% } else { %>
+                <i class="logo-icon fa <%- logoIcon ? logoIcon : theme.fa_logo %>" aria-hidden="true"></i>
+            <% } %>
+        </a>
         <% if(headerTitle) { %>
             <h1 id="main-title" class="title"><%- headerTitle %></h1>
         <% } %>

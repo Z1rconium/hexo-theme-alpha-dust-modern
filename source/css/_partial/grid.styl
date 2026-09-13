@@ -1,0 +1,47 @@
+// Minimal replacement for the Bootstrap 4 grid + list-inline utilities.
+// Only implements the class variants this theme's templates actually use:
+// .container, .row, col-{xs,sm}-{6,12}, col-{md,lg}-{3,6,12}, .list-inline(-item)
+
+.container
+  width 100%
+  max-width 1140px
+  margin 0 auto
+  padding 0 15px
+  box-sizing border-box
+
+.row
+  display flex
+  flex-wrap wrap
+  margin 0 -15px
+
+[class^="col-"], [class*=" col-"]
+  width 100%
+  padding 0 15px
+  box-sizing border-box
+
+.col-xs-6, .col-sm-6
+  width 50%
+
+@media (min-width: 768px)
+  .col-md-3
+    width 25%
+  .col-md-6
+    width 50%
+  .col-md-12
+    width 100%
+
+@media (min-width: 992px)
+  .col-lg-3
+    width 25%
+  .col-lg-6
+    width 50%
+  .col-lg-12
+    width 100%
+
+.list-inline
+  list-style none
+  padding-left 0
+  margin-bottom 0
+
+.list-inline-item
+  display inline-block

@@ -4,6 +4,63 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!--
+        Content-Security-Policy
+        Kept deliberately tight: script-src is 'self' and 'wasm-unsafe-eval' by default.
+        Allowed third-party origins are dynamically adapted based on theme features enabled
+        (Google Analytics, Disqus, Facebook comments, and font/icon CDNs).
+    -->
+    <%
+        var scriptSrc = ["'self'", "'wasm-unsafe-eval'"];
+        var styleSrc = ["'self'", "fonts.googleapis.com", "cdnjs.cloudflare.com"];
+        var fontSrc = ["'self'", "fonts.gstatic.com", "cdnjs.cloudflare.com"];
+        var imgSrc = ["'self'", "data:", "blob:"];
+        var connectSrc = ["'self'"];
+        var frameSrc = [];
+
+        if (theme.google_analytics) {
+            scriptSrc.push("https://www.google-analytics.com", "https://ssl.google-analytics.com");
+            imgSrc.push("https://www.google-analytics.com");
+            connectSrc.push("https://www.google-analytics.com");
+        }
+        if (theme.comments && theme.comments.disqus_shortname) {
+            scriptSrc.push("https://*.disqus.com", "https://*.disquscdn.com");
+            styleSrc.push("https://*.disquscdn.com");
+            imgSrc.push("https://*.disquscdn.com");
+            connectSrc.push("https://*.disqus.com", "https://*.disquscdn.com");
+            frameSrc.push("https://disqus.com", "https://*.disqus.com");
+        }
+        if (theme.comments && theme.comments.facebook && theme.comments.facebook.appid) {
+            scriptSrc.push("https://connect.facebook.net");
+            frameSrc.push("https://www.facebook.com");
+        }
+        var cspDirectives = [
+            "default-src 'self'",
+            "script-src " + scriptSrc.join(' '),
+            "style-src " + styleSrc.join(' '),
+            "font-src " + fontSrc.join(' '),
+            "img-src " + imgSrc.join(' '),
+            "connect-src " + connectSrc.join(' '),
+            "worker-src 'self' blob:",
+            "base-uri 'none'",
+            "object-src 'none'",
+            "form-action 'self'",
+            "upgrade-insecure-requests"
+        ];
+        if (frameSrc.length) {
+            cspDirectives.push("frame-src " + frameSrc.join(' '));
+        }
+    %>
+    <meta http-equiv="Content-Security-Policy" content="<%- cspDirectives.join('; ') %>">
+
+    <!--Favicon-->
+    <% if (theme.favicon){ %>
+        <link rel="icon" href="<%- url_for(theme.favicon) %>">
+    <% } %>
+    <% if (theme.apple_touch_icon){ %>
+        <link rel="apple-touch-icon" sizes="180x180" href="<%- url_for(theme.apple_touch_icon) %>">
+    <% } %>
+
     <!--Description-->
     <% if (page.description){ %>
         <meta name="description" content="<%= page.description %>">
@@ -78,21 +135,18 @@
     %>
     <title><%= title.join(' - ') %></title>
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+    <!-- Preconnect to third-party origins actually used -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <!-- Custom Fonts -->
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Google Fonts (non-blocking: fetched as print, swapped to all by main.js) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orbitron:500&family=Open+Sans&display=swap" media="print" data-async-css>
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orbitron:500&family=Open+Sans&display=swap"></noscript>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- Gallery -->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+    <!-- Font Awesome (icon font, self-hosted CDN mirror with SRI; deferred like the fonts) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-async-css>
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 
     <!-- Custom CSS -->
     <%- css('css/style.css') %>

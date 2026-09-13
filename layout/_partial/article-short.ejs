@@ -1,5 +1,5 @@
 
-<div class="post">
+<div class="post post-list">
 
     <div class="post-header index">
         <h1 class="title">
@@ -22,7 +22,23 @@
         </div>
     </div>
 
-    <% if(item.excerpt) { %>
+    <% if(item.encrypted) { %>
+        <div class="content encrypted-post-teaser" data-category="<%= item.encryptedCategory %>" data-cipher="<%= item.encryptedExcerptCipher %>">
+            <!-- Same compact-card treatment pdf-viewer.js gives a PDF embed
+                 in this same post-list context (see .pdf-compact-card). -->
+            <a href="<%- url_for(item.path) %>" class="encrypted-compact-card">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+                <span class="encrypted-compact-label">This post has been locked</span>
+                <span class="encrypted-compact-hint">Enter Password</span>
+            </a>
+            <!-- Filled in by category-unlock.js's initEncryptedTeasers if this
+                 category is already unlocked (sessionStorage) this session. -->
+            <div class="encrypted-post-revealed" hidden>
+                <div class="content"></div>
+                <a href="<%- url_for(item.path) %>" class="read-more">Read More</a>
+            </div>
+        </div>
+    <% } else if(item.excerpt) { %>
         <div class="content">
             <%- item.excerpt %>
         </div>

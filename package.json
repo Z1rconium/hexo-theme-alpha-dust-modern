@@ -1,0 +1,23 @@
+{
+  "name": "hexo-theme-alpha-dust",
+  "version": "1.0.0",
+  "description": "A glowy futuristic theme for Hexo.",
+  "keywords": [
+    "hexo",
+    "theme"
+  ],
+  "author": "Jonathan Klughertz",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/klugjo/hexo-theme-alpha-dust"
+  },
+  "bugs": {
+    "url": "https://github.com/klugjo/hexo-theme-alpha-dust/issues"
+  },
+  "peerDependencies": {
+    "hexo": ">=5.0.0",
+    "hexo-renderer-ejs": ">=1.0.0",
+    "hexo-renderer-stylus": ">=2.0.0"
+  }
+}

@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Orbitron:500');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+// Google Fonts are loaded via a non-blocking <link> in head.ejs, not @import,
+// so they don't add a second serial request inside the compiled stylesheet.
 
 linearGradient($top, $bottom)
   background: $top
@@ -19,6 +19,7 @@ $btnTextColor = #113a47
 $fontTitle = "Orbitron", sans-serif
 $titleTextShadow = 0 0 1px white, 0 0 5px white, 0 0 15px #228dff
 $titleTextShadowLight = 0 0 1px white, 0 0 3px white, 0 0 7px #228dff
+$errorColor = #ff5c5c
 
 $xs = '(max-width: 33.9em)'
 $sm = '(max-width: 47.9em)'

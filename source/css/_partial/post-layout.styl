@@ -73,8 +73,14 @@ section.main
           width 25%
           float left
           min-width 200px
-          a
+          .lightbox-trigger
+            display block
+            width 100%
+            padding 0
+            margin 0
+            background none
             border none
+            cursor pointer
             .img-thumbnail
               border none
               background transparent
@@ -95,14 +101,28 @@ section.main
      a, i
        margin-right 15px
 
-.featherlight
-  .featherlight-content
+.lightbox
+  border none
+  background transparent
+  padding 0
+  max-width 90vw
+  max-height 90vh
+  &::backdrop
+    background rgba(0, 0, 0, 0.85)
+  .lightbox-img
+    display block
+    max-width 90vw
+    max-height 90vh
+  .lightbox-close
+    position fixed
+    top 20px
+    right 30px
+    color $mainColor1
+    font-size 2.5em
+    line-height 1
+    cursor pointer
     background transparent
-    .featherlight-close
-      color $mainColor1
-      cursor pointer
-      transition text-shadow 0.3s ease
-      text-decoration none
-      background transparent
-      &:hover
-        text-shadow $titleTextShadowLight
+    border none
+    transition text-shadow 0.3s ease
+    &:hover
+      text-shadow $titleTextShadowLight

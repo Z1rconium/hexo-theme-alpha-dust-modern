@@ -1,0 +1,96 @@
+// Homepage teaser for a post whose category is password-protected: title
+// only (rendered by article-short.ejs's existing header block) plus this
+// compact card in place of the excerpt/content — unless category-unlock.js's
+// initEncryptedTeasers finds this category already unlocked this session, in
+// which case it hides the card and reveals a real preview instead.
+// Deliberately mirrors .pdf-compact-card (pdf-viewer.styl) property for
+// property, since pdf-viewer.js renders that exact same card shape for a PDF
+// embed in this same post-list context — the two "there's more here, follow
+// the link" affordances should look identical.
+.encrypted-compact-card
+  display flex
+  align-items center
+  gap 10px
+  padding 10px 14px
+  border 1px solid $mainColor1
+  color $mainColor1
+  text-decoration none
+  font-family $fontTitle
+  transition text-shadow 0.3s ease
+  &:hover
+    text-shadow $titleTextShadowLight
+  // See .encrypted-post-form below for why an explicit `display` needs this.
+  &[hidden]
+    display none
+
+  i.fa-lock
+    font-size 1.3em
+    flex none
+
+  .encrypted-compact-label
+    flex 1 1 auto
+    min-width 0
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
+
+  .encrypted-compact-hint
+    flex none
+    font-size 0.85em
+    color $greyTextColor
+    white-space nowrap
+
+  @media $xs
+    .encrypted-compact-hint
+      display none
+
+// Password gate widget that replaces a protected post's content/excerpt
+// everywhere else (single-post page, RSS feed). Mirrors .pdf-viewer's
+// bordered-box treatment for a "special embedded content" look.
+.encrypted-post
+  position relative
+  margin 0 0 3em 0
+  border 1px solid $mainColor1
+  background $bgColor
+  padding 20px
+
+  .encrypted-post-label
+    display block
+    margin-bottom 15px
+    font-family $fontTitle
+    color $mainColor1
+    text-transform uppercase
+
+  .encrypted-post-form
+    display flex
+    flex-wrap wrap
+    gap 10px
+    align-items center
+    // `display: flex` (author, normal) otherwise beats the UA stylesheet's
+    // `[hidden] { display: none }` (same specificity, lower origin), so
+    // toggling the `hidden` attribute from category-unlock.js would do
+    // nothing without this override.
+    &[hidden]
+      display none
+
+  .encrypted-post-input
+    flex 1 1 200px
+    padding 8px 10px
+    background $headerBgColor
+    color $mainColor1
+    border 1px solid $mainColor1
+    font-family 'Open Sans', sans-serif
+
+  .encrypted-post-submit
+    padding 8px 18px
+    line-height 1
+    border-bottom none
+
+  .encrypted-post-error
+    margin 10px 0 0
+    color $errorColor
+    font-family $fontTitle
+    text-transform uppercase
+
+  .encrypted-post-content
+    margin-top 20px
